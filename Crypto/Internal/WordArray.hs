@@ -114,7 +114,7 @@ mutableArray32FromAddrBE (I# n) a = IO $ \s ->
         loop i st mb
             | booleanPrim (i ==# n) = (# st, MutableArray32 mb #)
             | otherwise             =
-                let !st' = writeWord32Array# mb i (be32Prim (indexWord32OffAddr# a i)) st
+                let !st' = writeWord32Array# mb i (wordToWord32# (be32Prim (word32ToWord# (indexWord32OffAddr# a i)))) st
                  in loop (i +# 1#) st' mb
 
 -- | freeze a Mutable Array of Word32 into a immutable Array of Word32
